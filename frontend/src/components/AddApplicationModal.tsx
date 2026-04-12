@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import API from "../api/axios";
 
 export default function AddApplicationModal({ onClose }: any) {
   const [jd, setJd] = useState("");
@@ -23,7 +23,7 @@ export default function AddApplicationModal({ onClose }: any) {
       if (!company.trim() || !role.trim())
         throw new Error("Company and role are required");
 
-      return axios.post("http://localhost:5000/api/applications", {
+      return API.post("/applications", {
         company: company.trim(),
         role: role.trim(),
         status: "Applied",
@@ -66,8 +66,7 @@ export default function AddApplicationModal({ onClose }: any) {
     try {
       setLoadingParse(true);
 
-      const res = await axios.post(
-        "http://localhost:5000/api/ai/parse",
+      const res = await API.post("/applications",
         { jd }
       );
 

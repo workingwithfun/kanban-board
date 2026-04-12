@@ -1,8 +1,8 @@
+// frontend/src/api/axios.ts
 import axios from "axios";
 
 const API = axios.create({
   baseURL: "/api",
 });
 
-export const parseJD = (jd: string) =>
-  API.post("/ai/parse", { jd });
+export default API;

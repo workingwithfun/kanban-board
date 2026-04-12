@@ -1,9 +1,8 @@
 import { DragDropContext } from "@hello-pangea/dnd";
 import Column from "./Column";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { useState, useMemo } from "react";
-
+import API from "../api/axios";
 export default function KanbanBoard() {
   const queryClient = useQueryClient();
   const [selectedApp, setSelectedApp] = useState<any>(null);
@@ -13,7 +12,7 @@ export default function KanbanBoard() {
 const { data: applications = [], isLoading } = useQuery({
   queryKey: ["applications", userId],
   queryFn: async () => {
-    const res = await axios.get("http://localhost:5000/api/applications", {
+    const res = await API.get("/applications", {
       params: { userId },
     });
     return res.data;
@@ -61,8 +60,7 @@ const onDragEnd = async (result: any) => {
   });
 
   try {
-    await axios.put(
-      `http://localhost:5000/api/applications/${draggableId}`,
+    await API.put(`/applications/${draggableId}`,
       {
         status: newStatus,
         userId,
@@ -119,8 +117,7 @@ const onDragEnd = async (result: any) => {
 
               <button
                 onClick={async () => {
-                  await axios.delete(
-                    `http://localhost:5000/api/applications/${selectedApp._id}`
+                  await API.delete(`/applications/${selectedApp._id}`
                   );
 
                   queryClient.invalidateQueries({
