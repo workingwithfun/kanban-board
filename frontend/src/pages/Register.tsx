@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { registerUser } from "../api/auth";
 import { useNavigate, Link } from "react-router-dom";
  import { toast } from "react-toastify";
 import { ToastContainer } from "react-toastify/unstyled";
@@ -12,7 +11,7 @@ export default function Register() {
 
 const handleRegister = async () => {
   try {
-    const res = await registerUser({ email, password });
+    
 
     toast.success("Registration successful 🎉");
     navigate("/");
