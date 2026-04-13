@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
  import { toast } from "react-toastify";
+ import { registerUser } from "../api/auth";
 import { ToastContainer } from "react-toastify/unstyled";
 export default function Register() {
   const [email, setEmail] = useState("");
@@ -11,11 +12,10 @@ export default function Register() {
 
 const handleRegister = async () => {
   try {
-    
+    await registerUser({ email, password });
 
-    toast.success("Registration successful 🎉");
+    toast.success("Registration successful");
     navigate("/");
-
   } catch (err: any) {
     const message = err.response?.data?.error;
 
