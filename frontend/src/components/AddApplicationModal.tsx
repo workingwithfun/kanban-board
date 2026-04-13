@@ -57,32 +57,31 @@ export default function AddApplicationModal({ onClose }: any) {
   // -------------------------
   // PARSE JD
   // -------------------------
-  const handleParse = async () => {
-    if (!jd.trim()) {
-      alert("Please enter job description");
-      return;
-    }
+const handleParse = async () => {
+  if (!jd.trim()) {
+    alert("Please enter job description");
+    return;
+  }
 
-    try {
-      setLoadingParse(true);
+  try {
+    setLoadingParse(true);
 
-      const res = await API.post("/applications",
-        { jd }
-      );
+    const res = await API.post("/ai/parse", { jd });
 
-      const { parsed, suggestions } = res.data;
+    const { parsed, suggestions } = res.data;
 
-      setParsedData(parsed || {});
-      setSuggestions(suggestions || []);
-      setCompany(parsed?.company || "");
-      setRole(parsed?.role || "");
-    } catch (err) {
-      console.error(err);
-      alert("Parsing failed");
-    } finally {
-      setLoadingParse(false);
-    }
-  };
+    setParsedData(parsed || {});
+    setSuggestions(suggestions || []);
+    setCompany(parsed?.company || "");
+    setRole(parsed?.role || "");
+
+  } catch (err) {
+    console.error("Parse error:", err);
+    alert("Parsing failed");
+  } finally {
+    setLoadingParse(false);
+  }
+};
 
   // -------------------------
   // SAVE HANDLER
