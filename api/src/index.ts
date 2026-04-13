@@ -2,7 +2,6 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import mongoose from "mongoose";
-import serverless from "serverless-http";
 import authRoutes from "./routes/authRoutes";
 
 dotenv.config();
@@ -45,4 +44,3 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 // ✅ Required for Vercel
-export default serverless(app);
