@@ -1,4 +1,3 @@
-// api/index.ts
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
@@ -13,10 +12,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Routes
-app.use("/api/auth", authRoutes);
+// ✅ Routes (NO /api here)
+app.use("/auth", authRoutes);
 
-// ✅ Mongo connection (important tweak)
+// ✅ DB connection
 let isConnected = false;
 
 const connectDB = async () => {
@@ -31,12 +30,19 @@ const connectDB = async () => {
   }
 };
 
-// Middleware to ensure DB connection
 app.use(async (req, res, next) => {
   await connectDB();
   next();
 });
 
-// ❌ REMOVE app.listen()
 
+// ✅ 👇 THIS is the key part
+if (process.env.NODE_ENV !== "production") {
+  const PORT = 5000;
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+// ✅ Required for Vercel
 export default serverless(app);

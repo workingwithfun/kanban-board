@@ -10,7 +10,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use("/api/applications", applicationRoutes);
-app.use("/api/auth", authRoutes);
-app.use("/api/ai", aiRoutes);
+app.use("/applications", applicationRoutes);
+app.use("/auth", authRoutes);
+app.use("/ai", aiRoutes);
 export default app;
